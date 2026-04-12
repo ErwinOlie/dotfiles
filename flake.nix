@@ -9,24 +9,19 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }:
   let
     system = "x86_64-linux";
+    unstablePkgs = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
   in {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit system;
+      specialArgs = {
+        inherit unstablePkgs;
+      };
 
       modules = [
         ./configuration.nix
-
-        # Dit vervangt jouw "unstable import"
-        ({ config, pkgs, ... }: {
-          nixpkgs.overlays = [
-            (final: prev: {
-              unstable = import nixpkgs-unstable {
-                inherit system;
-                config.allowUnfree = true;
-              };
-            })
-          ];
-        })
       ];
     };
   };

@@ -1,8 +1,11 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
+#
+# We keep nixpkgs stable by default and only use nixpkgs-unstable for
+# explicitly selected packages that need newer versions (e.g. IDEA).
 
-{ config, pkgs, ... }:
+{ config, pkgs, unstablePkgs, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -134,7 +137,7 @@
         };
       };
 
-      
+
       languagePacks = [ "nl" "en-US" ];
     };
   };
@@ -151,7 +154,7 @@
     pkgs.xclip
     pkgs.wget
     pkgs.git
-    pkgs.unstable.jetbrains.idea
+    unstablePkgs.jetbrains.idea
     pkgs.slack
     pkgs.bruno
     pkgs.awscli2
