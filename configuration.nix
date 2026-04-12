@@ -3,13 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let
-  unstable = import <nixos-unstable> {
-    config = {
-      allowUnfree = true;
-    };
-  };
-in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -146,6 +139,8 @@ in
     };
   };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -156,7 +151,7 @@ in
     pkgs.xclip
     pkgs.wget
     pkgs.git
-    unstable.jetbrains.idea
+    pkgs.unstable.jetbrains.idea
     pkgs.slack
     pkgs.bruno
     pkgs.awscli2
