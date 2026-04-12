@@ -135,5 +135,4 @@
 
   system.stateVersion = "25.11";
 
-  programs.ssh.startAgent = true;
 }
