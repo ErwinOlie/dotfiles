@@ -146,6 +146,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  # Keep multiple JDKs installed for compatibility across projects.
+  # System default stays on JDK 21 (LTS) for stability.
   environment.systemPackages = [
     pkgs.neovim
     pkgs.xclip
@@ -170,7 +172,19 @@
   };
 
   environment.sessionVariables = {
-    JAVA_HOME = "${pkgs.jdk25}";
+    # System default Java: JDK 21 (LTS), chosen for long-term support and broad tooling compatibility.
+    JAVA_HOME = "${pkgs.jdk21}";
+
+    # Optional helpers for quickly switching Java per shell/project.
+    JAVA_HOME_21 = "${pkgs.jdk21}";
+    JAVA_HOME_25 = "${pkgs.jdk25}";
+  };
+
+  # Version switch mechanism for interactive shells.
+  # Use: `jdk21` (default/LTS) or `jdk25` (newer features) per project/session.
+  environment.shellAliases = {
+    jdk21 = "export JAVA_HOME=${pkgs.jdk21}; export PATH=\"$JAVA_HOME/bin:$PATH\"; java -version";
+    jdk25 = "export JAVA_HOME=${pkgs.jdk25}; export PATH=\"$JAVA_HOME/bin:$PATH\"; java -version";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
