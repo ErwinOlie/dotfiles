@@ -108,10 +108,8 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [
-    pkgs.neovim
     pkgs.xclip
     pkgs.wget
-    pkgs.git
     unstablePkgs.jetbrains.idea
     pkgs.slack
     pkgs.bruno
