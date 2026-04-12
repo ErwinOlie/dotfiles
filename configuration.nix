@@ -162,6 +162,13 @@
   ];
   virtualisation.docker.enable = true;
 
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.erwin = import ./home.nix;
+  };
+
   environment.sessionVariables = {
     JAVA_HOME = "${pkgs.jdk25}";
   };
