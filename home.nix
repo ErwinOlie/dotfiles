@@ -8,4 +8,6 @@
     enable = true;
     settings.user.name = "Erwin Olie";
   };
+
+  programs.neovim.enable = true;
 }
