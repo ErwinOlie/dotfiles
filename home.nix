@@ -8,4 +8,9 @@
     enable = true;
     settings.user.name = "Erwin Olie";
   };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+  };
 }
