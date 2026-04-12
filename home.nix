@@ -4,6 +4,8 @@
 
   programs.home-manager.enable = true;
 
+  services.ssh-agent.enable = true;
+
   programs.zsh = {
     enable = true;
     autocd = true;
@@ -23,7 +25,6 @@
 
   programs.ssh = {
     enable = true;
-    startAgent = true;
     addKeysToAgent = "yes";
   };
 
