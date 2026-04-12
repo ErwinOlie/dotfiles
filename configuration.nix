@@ -8,7 +8,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos";
 
@@ -117,7 +117,7 @@
     pkgs.bruno
     pkgs.awscli2
     pkgs.openshift
-    pkgs.jdk21
+    #pkgs.jdk21
     pkgs.jdk25
     pkgs.nodejs
   ];
