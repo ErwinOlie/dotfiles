@@ -6,6 +6,6 @@
 
   programs.git = {
     enable = true;
-    userName = "Erwin Olie";
+    settings.user.name = "Erwin Olie";
   };
 }
