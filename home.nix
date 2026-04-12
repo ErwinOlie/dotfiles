@@ -21,5 +21,11 @@
     settings.user.name = "Erwin Olie";
   };
 
+  programs.ssh = {
+    enable = true;
+    startAgent = true;
+    addKeysToAgent = "yes";
+  };
+
   programs.neovim.enable = true;
 }
