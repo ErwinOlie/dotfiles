@@ -63,6 +63,7 @@
   users.users.erwin = {
     isNormalUser = true;
     description = "Erwin Olie";
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       kdePackages.kate
@@ -135,4 +136,5 @@
   system.stateVersion = "25.11";
 
   programs.ssh.startAgent = true;
+  programs.zsh.enable = true;
 }
