@@ -11,7 +11,6 @@
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
     history = {
-      size = 50000;
       share = true;
     };
     initContent = ''
