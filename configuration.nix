@@ -121,6 +121,7 @@
     pkgs.openshift
     #pkgs.jdk21
     pkgs.jdk25
+    pkgs.maven
     pkgs.nodejs
   ];
   virtualisation.docker.enable = true;
