@@ -14,6 +14,7 @@
       share = true;
     };
     initContent = ''
+      setopt INC_APPEND_HISTORY
       bindkey "^[[1;5D" backward-word
       bindkey "^[[1;5C" forward-word
     '';
