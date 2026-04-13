@@ -10,6 +10,10 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     autosuggestion.enable = true;
+    history = {
+      size = 50000;
+      share = true;
+    };
     initContent = ''
       bindkey "^[[1;5D" backward-word
       bindkey "^[[1;5C" forward-word
