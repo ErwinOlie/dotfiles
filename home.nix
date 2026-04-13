@@ -9,12 +9,9 @@
     autocd = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    autosuggestion.enable = true;
   };
 
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
 
   programs.git = {
     enable = true;
