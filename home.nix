@@ -9,16 +9,13 @@
     autocd = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    autosuggestion.enable = true;
     initExtra = ''
       bindkey "^[[1;5D" backward-word
       bindkey "^[[1;5C" forward-word
     '';
   };
 
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
 
   programs.git = {
     enable = true;
