@@ -22,5 +22,7 @@
     settings.user.name = "Erwin Olie";
   };
 
+  services.ssh-agent.enable = true;
+
   programs.neovim.enable = true;
 }
