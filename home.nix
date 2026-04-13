@@ -9,6 +9,10 @@
     autocd = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    initExtra = ''
+      bindkey "^[[1;5D" backward-word
+      bindkey "^[[1;5C" forward-word
+    '';
   };
 
   programs.starship = {
