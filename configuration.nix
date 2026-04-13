@@ -63,7 +63,7 @@
   users.users.erwin = {
     isNormalUser = true;
     description = "Erwin Olie";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "podman" ];
     packages = with pkgs; [
       kdePackages.kate
     ];
@@ -121,7 +121,7 @@
     pkgs.jdk25
     pkgs.nodejs
   ];
-  virtualisation.docker.enable = true;
+  virtualisation.podman.enable = true;
 
   home-manager = {
     useGlobalPkgs = true;
