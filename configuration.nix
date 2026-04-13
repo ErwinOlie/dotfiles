@@ -113,6 +113,7 @@
   environment.systemPackages = [
     pkgs.xclip
     pkgs.wget
+    pkgs.gh
     unstablePkgs.jetbrains.idea
     pkgs.slack
     pkgs.bruno
