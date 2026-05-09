@@ -20,11 +20,15 @@ get_version() {
   local dir="$1"
   local pkg="$2"
   nix eval --raw --extra-experimental-features 'nix-command flakes' \
-    --expr "let flake = builtins.getFlake (toString ${dir@Q}); in flake.inputs.nixpkgs.legacyPackages.${SYSTEM}.${pkg}.version" 2>/dev/null || true
+    --expr "let
+      flake = builtins.getFlake \"${dir}\";
+      pkgs = flake.inputs.nixpkgs.legacyPackages.${SYSTEM};
+      drv = builtins.getAttr \"${pkg}\" pkgs;
+    in drv.version" 2>/dev/null || true
 }
 
 printf "## Nixpkgs package diff\n\n"
-printf "Compared lockfile update for \\`nixpkgs\\` on \\`%s\\`.\n\n" "$SYSTEM"
+printf "Compared lockfile update for nixpkgs on %s.\n\n" "$SYSTEM"
 printf "| package | base | head | status |\n"
 printf "|---|---:|---:|---|\n"
 
@@ -51,7 +55,7 @@ while IFS= read -r pkg; do
     ((changes+=1))
   fi
 
-  printf "| \\`%s\\` | %s | %s | %s |\n" "$pkg" "$base_v" "$head_v" "$status"
+  printf "| %s | %s | %s | %s |\n" "$pkg" "$base_v" "$head_v" "$status"
 done < "$WATCHLIST_FILE"
 
 printf "\n"
