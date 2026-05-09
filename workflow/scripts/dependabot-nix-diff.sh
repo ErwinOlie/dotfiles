@@ -29,8 +29,8 @@ get_version() {
 
 printf "## Nixpkgs package diff\n\n"
 printf "Compared lockfile update for nixpkgs on %s.\n\n" "$SYSTEM"
-printf "| package | base | head | status |\n"
-printf "|---|---:|---:|---|\n"
+printf "| package | base | head |\n"
+printf "|---|---:|---:|\n"
 
 changes=0
 while IFS= read -r pkg; do
@@ -44,23 +44,13 @@ while IFS= read -r pkg; do
 
   if [[ "$base_v" == "$head_v" ]]; then
     continue
-  elif [[ "$base_v" == "(missing)" ]]; then
-    status="added"
-    ((changes+=1))
-  elif [[ "$head_v" == "(missing)" ]]; then
-    status="removed"
-    ((changes+=1))
-  else
-    status="updated"
-    ((changes+=1))
   fi
 
-  printf "| %s | %s | %s | %s |\n" "$pkg" "$base_v" "$head_v" "$status"
+  ((changes+=1))
+  printf "| %s | %s | %s |\n" "$pkg" "$base_v" "$head_v"
 done < "$WATCHLIST_FILE"
 
 printf "\n"
 if [[ "$changes" -eq 0 ]]; then
   printf "Geen versieverschillen gevonden voor de watchlist.\n"
-else
-  printf "Totaal gewijzigde entries: **%d**.\n" "$changes"
 fi
