@@ -1,0 +1,10 @@
+# Voeg hier packages toe die je in Dependabot PR's wilt volgen
+bash
+git
+neovim
+openssl
+curl
+nodejs
+python3
+rustc
+cargo
