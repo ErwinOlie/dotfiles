@@ -32,7 +32,7 @@ jobs:
         run: |
           cp head/.github/nix-watchlist.txt .github-nix-watchlist.txt
           WATCHLIST_FILE=.github-nix-watchlist.txt \
-            bash head/scripts/dependabot-nix-diff.sh "$PWD/base" "$PWD/head" > diff.md
+            bash head/workflow/scripts/dependabot-nix-diff.sh "$PWD/base" "$PWD/head" > diff.md
 
       - name: Upsert PR comment
         uses: marocchino/sticky-pull-request-comment@v2
