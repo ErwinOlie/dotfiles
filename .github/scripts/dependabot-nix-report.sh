@@ -45,22 +45,31 @@ fi
 if [[ $base_build_rc -eq 0 && $head_build_rc -eq 0 ]]; then
   nvd_output="$(nvd diff .tmp/result-base .tmp/result-head || true)"
   package_rows="$(printf '%s\n' "$nvd_output" | awk '
-    /^\[[^]]+\]/ {
+    /\([^)]*->[[:space:]]*[^)]*\)/ {
+      line = $0
+      gsub(/^[[:space:]]+/, "", line)
+
       status = $1
       pkg = $2
+      # Tree-style nvd output can prepend rows with box-drawing characters.
+      if (status ~ /^[├└│]+$/ || status ~ /^[╠╚║]+$/) {
+        status = $2
+        pkg = $3
+      }
+
       old = ""
       new = ""
-      if (match($0, /\(([^)]*) -> ([^)]*)\)/, m)) {
+      if (match(line, /\(([^)]*)[[:space:]]*->[[:space:]]*([^)]*)\)/, m)) {
         old = m[1]
         new = m[2]
-      } else if (match($0, /\(\? -> ([^)]*)\)/, m)) {
-        old = "(missing)"
-        new = m[1]
-      } else if (match($0, /\(([^)]*) -> \?\)/, m)) {
-        old = m[1]
-        new = "(missing)"
       }
-      if (old != "" || new != "") {
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", old)
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", new)
+
+      if (old == "?" || old == "") old = "(missing)"
+      if (new == "?" || new == "") new = "(missing)"
+
+      if (pkg != "" && (old != "(missing)" || new != "(missing)")) {
         print status "\t" pkg "\t" old "\t" new
       }
     }
