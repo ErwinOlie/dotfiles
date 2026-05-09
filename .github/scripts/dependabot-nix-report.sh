@@ -50,13 +50,13 @@ if [[ $base_build_rc -eq 0 && $head_build_rc -eq 0 ]]; then
       pkg = $2
       old = ""
       new = ""
-      if (match($0, /\(([0-9][^)]*) -> ([0-9][^)]*)\)/, m)) {
+      if (match($0, /\(([^)]*) -> ([^)]*)\)/, m)) {
         old = m[1]
         new = m[2]
-      } else if (match($0, /\(\? -> ([0-9][^)]*)\)/, m)) {
+      } else if (match($0, /\(\? -> ([^)]*)\)/, m)) {
         old = "(missing)"
         new = m[1]
-      } else if (match($0, /\(([0-9][^)]*) -> \?\)/, m)) {
+      } else if (match($0, /\(([^)]*) -> \?\)/, m)) {
         old = m[1]
         new = "(missing)"
       }
