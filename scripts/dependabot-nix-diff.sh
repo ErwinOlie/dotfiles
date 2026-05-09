@@ -19,13 +19,13 @@ fi
 get_version() {
   local dir="$1"
   local pkg="$2"
-  nix eval --raw --extra-experimental-features 'nix-command flakes' \
-    --expr "let
-      flake = builtins.getFlake \"${dir}\";
-      pkgs = flake.inputs.nixpkgs.legacyPackages.${SYSTEM};
+  nix eval --raw --impure --extra-experimental-features 'nix-command flakes'     --expr "let
+      flake = builtins.getFlake \"path:${dir}\";
+      pkgs = flake.inputs.nixpkgs.legacyPackages.\"${SYSTEM}\";
       drv = builtins.getAttr \"${pkg}\" pkgs;
     in drv.version" 2>/dev/null || true
 }
+
 
 printf "## Nixpkgs package diff\n\n"
 printf "Compared lockfile update for nixpkgs on %s.\n\n" "$SYSTEM"
