@@ -43,7 +43,7 @@ while IFS= read -r pkg; do
   [[ -z "$head_v" ]] && head_v="(missing)"
 
   if [[ "$base_v" == "$head_v" ]]; then
-    status="unchanged"
+    continue
   elif [[ "$base_v" == "(missing)" ]]; then
     status="added"
     ((changes+=1))
