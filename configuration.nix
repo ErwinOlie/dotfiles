@@ -119,6 +119,8 @@
     pkgs.bruno
     pkgs.awscli2
     pkgs.openshift
+    pkgs.signal-desktop
+    pkgs.simple-scan
     #pkgs.jdk21
     pkgs.jdk25
     pkgs.nodejs
