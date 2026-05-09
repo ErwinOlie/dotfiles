@@ -1,10 +1,18 @@
-# Voeg hier packages toe die je in Dependabot PR's wilt volgen
-bash
+# Nix-watchlist voor Dependabot PR's
+# Alleen top-level nixpkgs attributen (getAttr) worden ondersteund.
+
 git
 neovim
-openssl
-curl
+zsh
+home-manager
+docker
+firefox
+idea-community
+slack
+bruno
+jdk25
+signal-desktop
 nodejs
-python3
-rustc
-cargo
+plasma-desktop
+nix
+nixos-rebuild
