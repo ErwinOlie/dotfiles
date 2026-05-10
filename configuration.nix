@@ -114,6 +114,7 @@
     pkgs.xclip
     pkgs.wget
     pkgs.gh
+    pkgs.gimp
     unstablePkgs.jetbrains.idea
     pkgs.slack
     pkgs.bruno
