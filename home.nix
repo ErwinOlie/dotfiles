@@ -124,8 +124,8 @@ in
     Unit.Description = "Periodieke check voor ErwinOlie/dotfiles updates";
 
     Timer = {
-      OnBootSec = "5m";
-      OnUnitActiveSec = "30m";
+      OnBootSec = "1m";
+      OnUnitActiveSec = "1m";
       Unit = "dotfiles-update-check.service";
     };
 
