@@ -10,7 +10,7 @@ firefox
 idea-community
 slack
 bruno
-jdk25
+openjdk
 signal-desktop
 nodejs
 plasma-desktop
