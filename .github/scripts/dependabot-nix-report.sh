@@ -2,7 +2,6 @@
 set -euo pipefail
 
 BASE_REF="${BASE_REF:-main}"
-WATCHLIST_FILE="${WATCHLIST_FILE:-.github/nix-watchlist.txt}"
 
 if [[ ! -f flake.lock ]]; then
   echo "flake.lock not found; skipping report generation." > dependabot-nix-report.md
@@ -36,46 +35,6 @@ nix build .#nixosConfigurations.nixos.config.system.build.toplevel -o .tmp/resul
 head_build_rc=$?
 set -e
 
-if [[ -f "$WATCHLIST_FILE" ]]; then
-  mapfile -t watchlist < <(sed -e 's/#.*$//' -e '/^\s*$/d' "$WATCHLIST_FILE")
-else
-  watchlist=()
-fi
-
-if [[ $base_build_rc -eq 0 && $head_build_rc -eq 0 ]]; then
-  nvd_output="$(nvd diff .tmp/result-base .tmp/result-head || true)"
-  package_rows="$(printf '%s\n' "$nvd_output" | awk '
-    /\([^)]*->[[:space:]]*[^)]*\)/ {
-      line = $0
-      gsub(/^[[:space:]]+/, "", line)
-
-      status = $1
-      pkg = $2
-      # Tree-style nvd output can prepend rows with box-drawing characters.
-      if (status ~ /^[├└│]+$/ || status ~ /^[╠╚║]+$/) {
-        status = $2
-        pkg = $3
-      }
-
-      old = ""
-      new = ""
-      if (match(line, /\(([^)]*)[[:space:]]*->[[:space:]]*([^)]*)\)/, m)) {
-        old = m[1]
-        new = m[2]
-      }
-      gsub(/^[[:space:]]+|[[:space:]]+$/, "", old)
-      gsub(/^[[:space:]]+|[[:space:]]+$/, "", new)
-
-      if (old == "?" || old == "") old = "(missing)"
-      if (new == "?" || new == "") new = "(missing)"
-
-      if (pkg != "" && (old != "(missing)" || new != "(missing)")) {
-        print status "\t" pkg "\t" old "\t" new
-      }
-    }
-  ' )"
-fi
-
 {
   echo "## Nix package update report"
   echo
@@ -107,27 +66,15 @@ fi
 
   if [[ $base_build_rc -eq 0 && $head_build_rc -eq 0 ]]; then
     echo
-    echo "### 3) System updated packages"
+    echo "### 3) Closure / derivation diff via nvd"
     echo
-    echo "Rows with ⚠️ are also present in \\`$WATCHLIST_FILE\\`."
+    echo '```bash'
+    echo "nvd diff .tmp/result-base .tmp/result-head"
+    echo '```'
     echo
-    echo "| status | package | base | head | watchlist |"
-    echo "|---|---|---:|---:|---|"
-    if [[ -n "${package_rows:-}" ]]; then
-      while IFS=$'\t' read -r status pkg base_v head_v; do
-        [[ -z "$status" ]] && continue
-        marker=""
-        for w in "${watchlist[@]}"; do
-          if [[ "$w" == "$pkg" ]]; then
-            marker="⚠️"
-            break
-          fi
-        done
-        echo "| $status | $pkg | ${base_v:-(unknown)} | ${head_v:-(unknown)} | $marker |"
-      done <<< "$package_rows"
-    else
-      echo "| (none) | - | - | - | - |"
-    fi
+    echo '```text'
+    nvd diff .tmp/result-base .tmp/result-head || true
+    echo '```'
   else
     echo
     echo "### 3) Closure / derivation diff"
