@@ -1,154 +1,111 @@
-{ config, pkgs, unstablePkgs, ... }:
+{ pkgs, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
-
   networking.hostName = "nixos";
-
   networking.networkmanager.enable = true;
 
   time.timeZone = "Europe/Amsterdam";
-
   i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "nl_NL.UTF-8";
-    LC_IDENTIFICATION = "nl_NL.UTF-8";
-    LC_MEASUREMENT = "nl_NL.UTF-8";
-    LC_MONETARY = "nl_NL.UTF-8";
-    LC_NAME = "nl_NL.UTF-8";
-    LC_NUMERIC = "nl_NL.UTF-8";
-    LC_PAPER = "nl_NL.UTF-8";
-    LC_TELEPHONE = "nl_NL.UTF-8";
-    LC_TIME = "nl_NL.UTF-8";
-  };
-
-  services.xserver.enable = true;
-
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  environment.etc."xdg/kdeglobals".text = ''
-    [General]
-    ColorScheme=BreezeDark
-
-    [KDE]
-    LookAndFeelPackage=org.kde.breezedark.desktop
-  '';
-
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "intl";
-  };
-
-  console.keyMap = "us-acentos";
-
-  services.printing.enable = true;
-
-  hardware.enableAllFirmware = true;
-  hardware.firmware = [ pkgs.sof-firmware ];
-
-  # Prefer Intel DSP audio path often required for internal laptop speakers.
-  boot.extraModprobeConfig = ''
-    options snd-intel-dspcfg dsp_driver=1
-  '';
-
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    wireplumber.enable = true;
-  };
 
   users.users.erwin = {
     isNormalUser = true;
     description = "Erwin Olie";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    ];
+    extraGroups = [ "networkmanager" "wheel" ];
+
+    # Extra group(s) kept for later.
+    # extraGroups = [ "networkmanager" "wheel" "docker" ];
+
+    # Optional user packages kept for later.
+    # packages = with pkgs; [ kdePackages.kate ];
   };
 
-  programs.firefox = {
-    enable = true;
-    policies = {
-      DontCheckDefaultBrowser = true;
+  # Minimal shell support.
+  programs.zsh.enable = true;
 
-      DisableTelemetry = true;
-      DisableFirefoxStudies = true;
-      DisableFirefoxAccounts = true;
-
-      DisableAppUpdate = true;
-      BackgroundAppUpdate = false;
-
-      OfferToSaveLogins = false;
-      PasswordManagerEnabled = false;
-      DisableMasterPasswordCreation = true;
-
-      ExtensionSettings = {
-        "*".installation_mode = "blocked";
-
-        "uBlock0@raymondhill.net" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          private_browsing = true;
-        };
-
-        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-        };
-      };
-
-      languagePacks = [ "nl" "en-US" ];
-    };
-  };
-
+  # Keep flakes enabled.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  programs.nix-ld.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
-
+  # Keep system package set very small.
   environment.systemPackages = [
-    pkgs.xclip
-    pkgs.wget
-    pkgs.gh
-    pkgs.gimp
-    unstablePkgs.jetbrains.idea
-    pkgs.slack
-    pkgs.bruno
-    pkgs.awscli2
-    pkgs.openshift
-    pkgs.signal-desktop
-    pkgs.simple-scan
-    #pkgs.jdk21
-    pkgs.jdk25
-    pkgs.nodejs
+    pkgs.git
+    pkgs.neovim
   ];
-  virtualisation.docker.enable = true;
 
+  # Minimal Home Manager integration.
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.erwin = import ./home.nix;
   };
 
-  environment.sessionVariables = {
-    JAVA_HOME = "${pkgs.jdk25}";
-  };
+  # ---- Disabled / optional config kept in comments ----
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  #
+  #i18n.extraLocaleSettings = {
+  #  LC_ADDRESS = "nl_NL.UTF-8";
+  #  LC_IDENTIFICATION = "nl_NL.UTF-8";
+  #  LC_MEASUREMENT = "nl_NL.UTF-8";
+  #  LC_MONETARY = "nl_NL.UTF-8";
+  #  LC_NAME = "nl_NL.UTF-8";
+  #  LC_NUMERIC = "nl_NL.UTF-8";
+  #  LC_PAPER = "nl_NL.UTF-8";
+  #  LC_TELEPHONE = "nl_NL.UTF-8";
+  #  LC_TIME = "nl_NL.UTF-8";
+  #};
+  #
+  #services.xserver.enable = true;
+  #services.displayManager.sddm.enable = true;
+  #services.desktopManager.plasma6.enable = true;
+  #environment.etc."xdg/kdeglobals".text = ''
+  #  [General]
+  #  ColorScheme=BreezeDark
+  #
+  #  [KDE]
+  #  LookAndFeelPackage=org.kde.breezedark.desktop
+  #'';
+  #
+  #services.xserver.xkb = {
+  #  layout = "us";
+  #  variant = "intl";
+  #};
+  #
+  #console.keyMap = "us-acentos";
+  #services.printing.enable = true;
+  #
+  #hardware.enableAllFirmware = true;
+  #hardware.firmware = [ pkgs.sof-firmware ];
+  #boot.extraModprobeConfig = ''
+  #  options snd-intel-dspcfg dsp_driver=1
+  #'';
+  #services.pulseaudio.enable = false;
+  #security.rtkit.enable = true;
+  #services.pipewire = {
+  #  enable = true;
+  #  alsa.enable = true;
+  #  alsa.support32Bit = true;
+  #  pulse.enable = true;
+  #  wireplumber.enable = true;
+  #};
+  #
+  #programs.firefox = {
+  #  enable = true;
+  #  policies = { };
+  #};
+  #
+  #programs.nix-ld.enable = true;
+  #nixpkgs.config.allowUnfree = true;
+  #virtualisation.docker.enable = true;
+  #environment.sessionVariables = {
+  #  JAVA_HOME = "${pkgs.jdk25}";
+  #};
+  #programs.ssh.startAgent = true;
 
   system.stateVersion = "25.11";
-
-  programs.ssh.startAgent = true;
-  programs.zsh.enable = true;
 }
