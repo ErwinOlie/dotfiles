@@ -31,6 +31,14 @@
   programs.firefox.enable = true;
   environment.systemPackages = with pkgs; [
     git
+    gimp
+    slack
+    bruno
+    signal-desktop
+    simple-scan
+    jdk25
+    anki
+    jetbrains.idea
   ];
 
   system.stateVersion = "25.11";
