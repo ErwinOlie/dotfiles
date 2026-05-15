@@ -17,6 +17,8 @@
 
   time.timeZone = "Europe/Amsterdam";
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
