@@ -15,6 +15,8 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
+  time.timeZone = "Europe/Amsterdam";
+
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
