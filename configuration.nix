@@ -15,6 +15,9 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
+  services.displayManager.sddm.enable = true;
+  services.desktopManage.rplasma6.enable = true;
+
   users.users.erwin = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
