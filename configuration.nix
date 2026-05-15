@@ -16,7 +16,7 @@
   };
 
   services.displayManager.sddm.enable = true;
-  services.desktopManage.rplasma6.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   users.users.erwin = {
     isNormalUser = true;
