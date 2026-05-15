@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    <home-manager/nixos>
+    <plasma-manager/modules>
+  ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -27,6 +32,19 @@
   users.users.erwin = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+  };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.erwin = {
+    programs.home-manager.enable = true;
+    programs.plasma = {
+      enable = true;
+      workspace = {
+        lookAndFeel = "org.kde.breezedark.desktop";
+        colorScheme = "BreezeDark";
+      };
+    };
   };
 
   programs.ssh.startAgent = true;
@@ -57,6 +75,7 @@
       };
     };
   };
+
   environment.systemPackages = with pkgs; [
     git
     gimp
