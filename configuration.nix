@@ -52,6 +52,12 @@
   services.printing.enable = true;
 
   hardware.enableAllFirmware = true;
+  hardware.firmware = [ pkgs.sof-firmware ];
+
+  # Prefer Intel DSP audio path often required for internal laptop speakers.
+  boot.extraModprobeConfig = ''
+    options snd-intel-dspcfg dsp_driver=1
+  '';
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
