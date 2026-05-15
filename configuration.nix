@@ -17,6 +17,10 @@
 
   time.timeZone = "Europe/Amsterdam";
 
+  boot.extraModprobeConfig = ''
+    options snd-intel-dspcfg dsp_driver=1
+  '';
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   services.displayManager.sddm.enable = true;
@@ -60,7 +64,6 @@
     };
   };
   environment.systemPackages = with pkgs; [
-    git
     gimp
     slack
     bruno
