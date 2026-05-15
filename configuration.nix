@@ -27,8 +27,9 @@
     extraGroups = [ "wheel" ];
   };
 
+  programs.ssh.startAgent = true;
+  programs.firefox.enable = true;
   environment.systemPackages = with pkgs; [
-    firefox
     git
   ];
 
