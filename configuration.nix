@@ -29,14 +29,14 @@
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
     "broadcom-bt-firmware"
     "b43-firmware"
-    "xone-dongle-firmware"
-    "facetimehd-calibration"
-    "facetimehd-firmware"
     "slack"
     "idea"
   ];
 
-  hardware.enableAllFirmware = true;
+  hardware.firmware = with pkgs; [
+    broadcom-bt-firmware
+    b43Firmware_6_30_163_46
+  ];
   networking.networkmanager.enable = true;
 
   users.users.erwin = {
