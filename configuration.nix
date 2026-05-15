@@ -27,16 +27,11 @@
   services.desktopManager.plasma6.enable = true;
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-    "broadcom-bt-firmware"
-    "b43-firmware"
     "slack"
     "idea"
   ];
 
-  hardware.firmware = with pkgs; [
-    broadcom-bt-firmware
-    b43Firmware_6_30_163_46
-  ];
+  hardware.enableRedistributableFirmware = true;
   networking.networkmanager.enable = true;
 
   users.users.erwin = {
