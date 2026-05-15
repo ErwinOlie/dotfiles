@@ -20,10 +20,10 @@
       modules = [
         ./configuration.nix
         home-manager.nixosModules.home-manager
-        plasma-manager.homeModules.plasma-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
           home-manager.users.erwin = import ./home.nix;
         }
       ];
