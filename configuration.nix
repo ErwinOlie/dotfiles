@@ -30,7 +30,33 @@
   };
 
   programs.ssh.startAgent = true;
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    policies = {
+      DontCheckDefaultBrowser = true;
+
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      DisableFirefoxAccounts = true;
+
+      OfferToSaveLogins = false;
+      PasswordManagerEnabled = false;
+      DisableMasterPasswordCreation = true;
+
+      ExtensionSettings = {
+        "*".installation_mode = "blocked";
+        "uBlock0@raymondhill.net" = {
+          installation_mode = "force_installed";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          private_browsing = true;
+        };
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          installation_mode = "force_installed";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+        };
+      };
+    };
+  };
   environment.systemPackages = with pkgs; [
     git
     gimp
