@@ -18,10 +18,19 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
+  hardware.enableAllFirmware = true;
+  networking.networkmanager.enable = true;
+
   users.users.erwin = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
+
+  environment.systemPackages = with pkgs; [
+    firefox
+    git
+  ];
 
   system.stateVersion = "25.11";
 }
