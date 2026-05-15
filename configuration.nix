@@ -26,7 +26,16 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "broadcom-bt-firmware"
+    "b43-firmware"
+    "xone-dongle-firmware"
+    "facetimehd-calibration"
+    "facetimehd-firmware"
+    "slack"
+    "idea"
+  ];
+
   hardware.enableAllFirmware = true;
   networking.networkmanager.enable = true;
 
