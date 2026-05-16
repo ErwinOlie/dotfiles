@@ -5,7 +5,16 @@
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
+    enableDefaultConfig = false;
+    matchBlocks = {
+      "*" = {
+        addKeysToAgent = "yes";
+        identitiesOnly = true;
+        identityFile = [
+          "~/.ssh/id_github"
+        ];
+      };
+    };
   };
 
   programs.git = {
