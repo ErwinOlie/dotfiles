@@ -38,8 +38,10 @@
 
   users.users.erwin = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "docker" ];
   };
+
+  virtualisation.docker.enable = true;
 
   programs.ssh.startAgent = true;
   programs.firefox = {
