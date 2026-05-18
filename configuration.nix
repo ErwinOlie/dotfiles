@@ -31,6 +31,12 @@
     "idea"
   ];
 
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 
   programs.nix-ld.enable = true;
   hardware.enableRedistributableFirmware = true;
