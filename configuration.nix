@@ -86,6 +86,7 @@
     jdk25
     anki
     jetbrains.idea
+    python3
   ];
 
   system.stateVersion = "25.11";
