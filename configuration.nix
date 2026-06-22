@@ -87,6 +87,7 @@
     anki
     jetbrains.idea
     python3
+    nodejs_22
     dbeaver-bin
   ];
 
