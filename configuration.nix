@@ -87,6 +87,7 @@
     anki
     jetbrains.idea
     python3
+    dbeaver-bin
   ];
 
   system.stateVersion = "25.11";
