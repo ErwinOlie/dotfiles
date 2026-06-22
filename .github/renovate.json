@@ -1,0 +1,9 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["nix"],
+  "nix": {
+    "enabled": true
+  },
+  "labels": ["dependencies", "renovate"]
+}
